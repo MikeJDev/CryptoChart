@@ -6,18 +6,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      date: [],
+      price: []
     };
   }
 
-  getPrice() {
+  componentDidMount() {
     axios
       .get("https://api.coindesk.com/v1/bpi/historical/close.json")
       .then(response => {
-        let prices = response.data.bpi;
+        let btcInfo = response.data.bpi;
+        let dates = Object.keys(btcInfo);
+        let prices = Object.values(btcInfo);
         console.log(response.data.bpi);
+        console.log("prices:", prices);
+        console.log("dates", dates);
+
         this.setState({
-          data: prices
+          date: dates,
+          price: prices
         });
       })
       .catch(err => {
@@ -28,11 +35,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={this.getPrice.bind(this)}>
-          {" "}
-          Get Current Prices{" "}
-        </button>
-        <NewChart price={this.state.data} />
+        <button type="button"> Get Current Prices </button>
+        <NewChart date={this.state.date} price={this.state.price} />
       </div>
     );
   }

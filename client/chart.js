@@ -7,17 +7,19 @@ class NewChart extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    console.log("this is chart state", this.state.props);
+  componentDidUpdate() {
+    console.log("this is chart state", this.props);
+    let btcDates = this.props.date;
+    let btcPrices = this.props.price;
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: btcDates,
         datasets: [
           {
             label: "Bitcoin Price",
-            data: [12, 19, 3, 5, 2, 3],
+            data: btcPrices,
             backgroundColor: [
               // "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
