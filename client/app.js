@@ -14,9 +14,10 @@ class App extends React.Component {
     axios
       .get("https://api.coindesk.com/v1/bpi/historical/close.json")
       .then(response => {
+        let prices = response.data.bpi;
         console.log(response.data.bpi);
         this.setState({
-          data: response.data.bpi
+          data: prices
         });
       })
       .catch(err => {
@@ -27,11 +28,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={this.getPrice}>
+        <button type="button" onClick={this.getPrice.bind(this)}>
           {" "}
           Get Current Prices{" "}
         </button>
-        <NewChart />
+        <NewChart price={this.state.data} />
       </div>
     );
   }
